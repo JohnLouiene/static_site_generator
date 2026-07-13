@@ -9,12 +9,15 @@ class TextType(Enum):
     IMAGE = "image"
 
 class TextNode():
-    def __init__(self, text: str, text_type: TextType, url:str = None):
+    def __init__(self, text: str, text_type: TextType, url:str | None = None):
         self.text = text
         self.text_type = text_type
         self.url = url
 
     def __eq__(self, other):
+        if not isinstance(other, TextNode):
+            return False
+        
         return (
             self.text == other.text and
             self.text_type == other.text_type and
@@ -22,4 +25,4 @@ class TextNode():
             )
     
     def __repr__(self):
-        return (f"TextNode({self.text}, {self.text_type.value}, {self.url})")
+        return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
