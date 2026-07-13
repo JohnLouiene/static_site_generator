@@ -1,7 +1,8 @@
 from enum import Enum
+from src.htmlnode import LeafNode
 
 class TextType(Enum):
-    PLAIN = "plain"
+    TEXT = "text"
     BOLD = "bold"
     ITALIC = "italic"
     CODE = "code"
@@ -26,3 +27,23 @@ class TextNode():
     
     def __repr__(self):
         return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
+
+def text_node_to_html_node(text_node: TextNode) -> LeafNode:
+    text_type = text_node.text_type
+    text_value = text_node.text
+
+    match text_type:
+        case TextType.TEXT:
+            return LeafNode(None, value=text_value)
+        case TextType.BOLD:
+            return LeafNode("b", value=text_value)
+        case TextType.ITALIC:
+            return LeafNode("i", value=text_value)
+        case TextType.CODE:
+            return LeafNode("code", value=text_value)
+        case TextType.LINK:
+            return LeafNode("a", value=text_value, props={"href": text_node.url})
+        case TextType.IMAGE:
+            return LeafNode("img", value="", props={"src": text_node.url, "alt": text_node.text})
+        case _:
+            raise Exception(f"No matching text type found for {text_node}")

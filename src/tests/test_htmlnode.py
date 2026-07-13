@@ -96,3 +96,6 @@ class TestParentNode(unittest.TestCase):
         parent_node = ParentNode("div", [])
         with self.assertRaisesRegex(ValueError, "Parent node is missing child nodes in children list"):
             parent_node.to_html()
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,5 +1,5 @@
-from textnode import TextType, TextNode
-from htmlnode import HTMLNode
+from src.textnode import TextType, TextNode
+from src.htmlnode import HTMLNode
 
 def main():
     TestExample = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
