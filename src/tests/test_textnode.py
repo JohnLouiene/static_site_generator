@@ -67,5 +67,11 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.props, {"src": "https://www.google.com", "alt": "alternate image"})
 
+        #No Match
+        node = TextNode("This is a text node", TextType.TEXT)
+        node.text_type = "NONEXISTENT"
+        with self.assertRaisesRegex(ValueError, "Unsupported text type: NONEXISTENT"):
+            text_node_to_html_node(node)
+
 if __name__ == "__main__":
     unittest.main()

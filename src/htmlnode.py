@@ -21,8 +21,8 @@ class HTMLNode():
     def __repr__(self):
         return f"tag:{self.tag}, value:{self.value}, children:{self.children}, props:{self.props}"
 
-#Child class for HTML Nodes, representing HTMLNodes that do not have a child or are the tip of the HTML node tree.
 class LeafNode(HTMLNode):
+    """Child class of an HTML parent node"""
     def __init__(self, tag: str | None, value: str, props: dict | None = None):
         super().__init__(tag=tag, value=value, children=None, props=props)
 
@@ -39,6 +39,7 @@ class LeafNode(HTMLNode):
         return f"tag:{self.tag}, value:{self.value}, props:{self.props}"
         
 class ParentNode(HTMLNode):
+    """Parent class of an HTML parent node, requires a child node"""
     def __init__(self, tag: str, children: list,  props: dict | None = None):
         super().__init__(tag=tag, value=None, children=children, props=props)
 

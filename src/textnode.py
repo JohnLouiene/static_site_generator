@@ -29,6 +29,7 @@ class TextNode():
         return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
 
 def text_node_to_html_node(text_node: TextNode) -> LeafNode:
+    """Converts a text node into an html leaf node"""
     text_type = text_node.text_type
     text_value = text_node.text
 
@@ -46,4 +47,4 @@ def text_node_to_html_node(text_node: TextNode) -> LeafNode:
         case TextType.IMAGE:
             return LeafNode("img", value="", props={"src": text_node.url, "alt": text_node.text})
         case _:
-            raise Exception(f"No matching text type found for {text_node}")
+            raise ValueError(f"Unsupported text type: {text_node.text_type}")
