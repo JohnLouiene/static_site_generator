@@ -74,11 +74,10 @@ class TestParentNode(unittest.TestCase):
     def test_to_html_props(self):
         child_node_with_props = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
         parent_node_with_props = ParentNode("div", [child_node_with_props], {"class": "container", "id": "main"})
+        self.assertEqual(parent_node_with_props.to_html(), f'<div class="container" id="main"><a href="https://www.google.com">Click me!</a></div>')
 
         child_node_without_props = LeafNode("a", "Click me!")
         parent_node_without_props = ParentNode("div", [child_node_without_props])
-
-        self.assertEqual(parent_node_with_props.to_html(), f'<div class="container" id="main"><a href="https://www.google.com">Click me!</a></div>')
         self.assertEqual(parent_node_without_props.to_html(), f'<div><a>Click me!</a></div>')
 
     def test_to_html_parent_no_tag(self):

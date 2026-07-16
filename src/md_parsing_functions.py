@@ -1,13 +1,8 @@
-from enum import Enum
+import re
 from src.textnode import TextNode, TextType
 
-class DelimiterType(Enum):
-    BOLD = "**"
-    ITALIC = "_"
-    CODE = "`"
-
 def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: TextType) -> list[TextNode]:
-    """Converts a line of markdown file into a textnode given a delimiter from DelimiterType"""
+    """Converts a line of markdown file into a textnode given a delimiter"""
     #Collection of TextNodes to return
     text_nodes = []
 
@@ -39,4 +34,9 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
 
     return text_nodes
 
+def extract_markdown_images(text):
+    return re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+def extract_markdown_links(text):
+    return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
         
