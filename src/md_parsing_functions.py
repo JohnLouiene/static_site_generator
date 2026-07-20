@@ -35,7 +35,7 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
     return text_nodes
 
 def split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
-    """Converts a line of markdown file into a textnode given a delimiter"""
+    """Splits a list of nodes made of lines of markdown files seperating link nodes from the text"""
     #Collection of TextNodes to return
     text_nodes = []
 
@@ -71,7 +71,7 @@ def split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
     return text_nodes
 
 def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
-    """Converts a line of markdown file into a textnode given a delimiter"""
+    """Splits a list of nodes made of lines of markdown files seperating image nodes from the text"""
     #Collection of TextNodes to return
     text_nodes = []
 
@@ -105,6 +105,19 @@ def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
             raise Exception("Error in splitting up text using markdown text for links")
 
     return text_nodes
+
+def text_to_textnodes(text):
+    """Converts a markdown file into text nodes with the given text types"""
+    text_node_list = [TextNode(text, TextType.TEXT)]
+    
+    bold_nodes_split = split_nodes_delimiter(text_node_list, "**", TextType.BOLD)
+    italic_nodes_split = split_nodes_delimiter(bold_nodes_split, "_", TextType.ITALIC)
+    code_nodes_split = split_nodes_delimiter(italic_nodes_split, "`", TextType.CODE)
+
+    image_nodes_split = split_nodes_image(code_nodes_split)
+    link_nodes_split = split_nodes_link(image_nodes_split)
+
+    return link_nodes_split
 
 def extract_markdown_images(text):
     return re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
