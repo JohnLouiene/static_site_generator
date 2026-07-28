@@ -120,8 +120,10 @@ def text_to_textnodes(text):
     return link_nodes_split
 
 def extract_markdown_images(text):
+    """Extracts all instances of markdown image texts using regex to a list"""
     return re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
 
 def extract_markdown_links(text):
+    """Extracts all instances of markdown link texts using regex to a list"""
     return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
         

@@ -3,7 +3,7 @@ from src.textnode import TextNode, TextType, text_node_to_html_node
 from src.htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestTextNode(unittest.TestCase):
-    def test_eq(self):
+    def test_text_node_eq(self):
         node = TextNode("This is a text node", TextType.BOLD)
         node2 = TextNode("This is a text node", TextType.BOLD)
         node3 = TextNode("This is a text node", TextType.BOLD, None)
@@ -12,7 +12,7 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node, node3)
         self.assertIsInstance(node, TextNode)
     
-    def test_not_eq(self):
+    def test_text_node_not_eq(self):
         node = TextNode("This is a text node", TextType.BOLD)
         node2 = TextNode("This is a text node", TextType.TEXT)
         node3 = TextNode("This is a text node with a different wording", TextType.TEXT)
@@ -25,11 +25,11 @@ class TestTextNode(unittest.TestCase):
         self.assertNotEqual(node4, node5)
         self.assertNotEqual(node, "Not a text node")
 
-    def test_repr(self):
+    def test_text_node_repr(self):
         TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
         self.assertIsNotNone(TextNode)
 
-    def test_text(self):
+    def test_text_node_text(self):
         #text
         node = TextNode("This is a text node", TextType.TEXT)
         html_node = text_node_to_html_node(node)
