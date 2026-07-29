@@ -1,5 +1,5 @@
 import unittest
-from src.textblocks import markdown_to_blocks, block_to_block_type, BlockType
+from textblocks import markdown_to_blocks, block_to_block_type, BlockType
 
 class TestMarkdownToBlocks(unittest.TestCase):
     def test_markdown_to_blocks(self):
@@ -128,6 +128,9 @@ class TestBlockToBlockType(unittest.TestCase):
         self.assertEqual(result, BlockType.PARAGRAPH)
 
         result = block_to_block_type("###")
+        self.assertEqual(result, BlockType.PARAGRAPH)
+
+        result = block_to_block_type("#######")
         self.assertEqual(result, BlockType.PARAGRAPH)
 
         result = block_to_block_type("###                     ")

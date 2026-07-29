@@ -8,7 +8,7 @@ class BlockType(Enum):
     UNORDERED_LIST = "unordered_list"
     ORDERED_LIST = "ordered_list"
 
-def markdown_to_blocks(markdown: str):
+def markdown_to_blocks(markdown: str) -> list[str]:
     """Splits a markdown file into a list of text blocks given they have newline spacing"""
     blocks = markdown.split("\n\n")
     result = []
@@ -21,7 +21,7 @@ def markdown_to_blocks(markdown: str):
 
     return result
 
-def block_to_block_type(block: str):
+def block_to_block_type(block: str) -> BlockType:
     """Checks the block type of a markdown text block"""
 
     if block.startswith(("# ","## ","### ","#### ","##### ","###### ")):
@@ -73,6 +73,9 @@ def block_to_block_type(block: str):
             return BlockType.ORDERED_LIST
 
     return BlockType.PARAGRAPH
+
+
+        
 
     
 

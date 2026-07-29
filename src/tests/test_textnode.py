@@ -1,5 +1,5 @@
 import unittest
-from src.textnode import (
+from textnode import (
     TextNode, 
     TextType, 
     text_node_to_html_node,
@@ -10,8 +10,6 @@ from src.textnode import (
     extract_markdown_images, 
     extract_markdown_links
     )
-
-from src.htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestTextNode(unittest.TestCase):
     def test_text_node_eq(self):

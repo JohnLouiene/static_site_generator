@@ -1,6 +1,6 @@
 from enum import Enum
 import re
-from src.htmlnode import LeafNode
+from htmlnode import LeafNode
 
 class TextType(Enum):
     TEXT = "text"
@@ -155,7 +155,7 @@ def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
 
     return text_nodes
 
-def text_to_textnodes(text):
+def text_to_textnodes(text) -> list[TextNode]:
     """Converts a markdown file into text nodes with the given text types"""
     text_node_list = [TextNode(text, TextType.TEXT)]
     
@@ -165,13 +165,14 @@ def text_to_textnodes(text):
 
     image_nodes_split = split_nodes_image(code_nodes_split)
     link_nodes_split = split_nodes_link(image_nodes_split)
+    list_text_nodes = link_nodes_split
 
-    return link_nodes_split
+    return list_text_nodes
 
-def extract_markdown_images(text):
+def extract_markdown_images(text: str) -> list[str]:
     """Extracts all instances of markdown image texts using regex to a list"""
     return re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
 
-def extract_markdown_links(text):
+def extract_markdown_links(text: str) -> list[str]:
     """Extracts all instances of markdown link texts using regex to a list"""
     return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
