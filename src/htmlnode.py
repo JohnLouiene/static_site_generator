@@ -26,8 +26,8 @@ class LeafNode(HTMLNode):
     def __init__(self, tag: str | None, value: str, props: dict | None = None):
         super().__init__(tag=tag, value=value, children=None, props=props)
 
-    def to_html(self):
-        if not self.value:
+    def to_html(self) -> str:
+        if not self.value and self.tag != "img":
             raise ValueError("All leaf nodes must have a value")
         
         if self.tag is None:
@@ -43,7 +43,7 @@ class ParentNode(HTMLNode):
     def __init__(self, tag: str, children: list,  props: dict | None = None):
         super().__init__(tag=tag, value=None, children=children, props=props)
 
-    def to_html(self):
+    def to_html(self) -> str:
         if not self.tag:
             raise ValueError("Parent node is missing a tag parameter")
 

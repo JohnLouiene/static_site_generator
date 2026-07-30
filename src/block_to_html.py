@@ -51,8 +51,9 @@ def quote_to_html_node(text: str) -> HTMLNode:
             new_line = line.removeprefix("> ")
         elif line.startswith(">"):
             new_line = line.removeprefix(">")
-        
-        new_text += new_line + " "
+
+        if new_line != "":
+            new_text += new_line + " "
 
     new_text = new_text[:-1]
     children = text_to_children(new_text)
@@ -87,7 +88,7 @@ def code_to_html_node(text: str) -> HTMLNode:
     if not text.startswith("```\n") or not text.endswith("```"):
         raise ValueError("Invalid code block")
     
-    new_text = text.strip()
+    new_text = text.lstrip()
     new_text = new_text[4:-3]
 
     text_node = TextNode(new_text, TextType.TEXT)
