@@ -1,5 +1,6 @@
 import os
 import shutil
+from pathlib import Path
 from block_to_html import markdown_to_html_node
 
 def delete_directory(directory_to_remove: str):
@@ -54,13 +55,23 @@ def generate_page(from_path: str, template_path: str, dest_path: str):
     new_page = template_contents.replace("{{ Title }}", page_title).replace("{{ Content }}", content_html)
 
     directory_path = os.path.dirname(dest_path)
+
     if not os.path.exists(directory_path):
-        os.mkdir(directory_path)
+        os.makedirs(directory_path)
 
     with open(dest_path, "x") as f:
         f.write(new_page)
     f.close()
 
-    
-        
+def generate_pages_recursive(dir_path_content: str, template_path: str, dest_dir_path: str):
+    files_to_generate = os.listdir(dir_path_content)
 
+    for file in files_to_generate:
+        origin_path = os.path.join(dir_path_content, file)
+        destination_path = os.path.join(dest_dir_path, file)
+        
+        if os.path.isfile(origin_path):
+            destination_path = Path(destination_path).with_suffix(".html")
+            generate_page(origin_path, template_path, destination_path)
+        else:
+            generate_pages_recursive(origin_path, template_path, destination_path)

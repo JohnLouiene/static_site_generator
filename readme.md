@@ -6,7 +6,7 @@
 - unordered_list ("- " -> <ul>)
 - ordered_list blocks ("1. " -> <ol>)
 
-# Available markdown lines that can be parsed:
+# Available markdown symbols that can be parsed:
 - text (plain text -> plain text)
 - bold ("**" -> <b>)
 - italic ("_" -> <i>)
@@ -15,4 +15,6 @@
 - images ("![{alt}]({url})")
 
 
-Issues: Single and triple backticks without closing raises an error, double backticks will just result in an empty space
+Notes: 
+- Incomplete markdown symbols will raise an error
+- Requires an h1 header at the beginning of the markdown
