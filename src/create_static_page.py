@@ -7,7 +7,7 @@ def delete_directory(directory_to_remove: str):
     if os.path.exists(directory_to_remove):
         shutil.rmtree(directory_to_remove)
 
-def copy_to_public(origin_path: str, destination_directory: str):
+def copy_to_directory(origin_path: str, destination_directory: str):
     if not os.path.exists(destination_directory):
         os.mkdir(destination_directory)
             
@@ -18,7 +18,7 @@ def copy_to_public(origin_path: str, destination_directory: str):
         new_directory = os.path.join(destination_directory, file)
         print(f" * {file_path} -> {new_directory}")
         if not os.path.isfile(file_path):
-            copy_to_public(file_path, new_directory)
+            copy_to_directory(file_path, new_directory)
         else:
             shutil.copy(file_path, destination_directory)
 
@@ -36,7 +36,7 @@ def extract_title(markdown: str) -> str:
 
     return header
 
-def generate_page(from_path: str, template_path: str, dest_path: str):
+def generate_page(from_path: str, template_path: str, dest_path: str, base_path:str):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     with open(from_path) as f:
@@ -52,7 +52,7 @@ def generate_page(from_path: str, template_path: str, dest_path: str):
 
     page_title = extract_title(markdown_contents)
 
-    new_page = template_contents.replace("{{ Title }}", page_title).replace("{{ Content }}", content_html)
+    new_page = template_contents.replace("{{ Title }}", page_title).replace("{{ Content }}", content_html).replace('href="/', f'href="{base_path}').replace('src="/', f'src="{base_path}')
 
     directory_path = os.path.dirname(dest_path)
 
@@ -63,15 +63,15 @@ def generate_page(from_path: str, template_path: str, dest_path: str):
         f.write(new_page)
     f.close()
 
-def generate_pages_recursive(dir_path_content: str, template_path: str, dest_dir_path: str):
+def generate_pages_recursive(dir_path_content: str, template_path: str, dest_dir_path: str, base_path: str):
     files_to_generate = os.listdir(dir_path_content)
 
     for file in files_to_generate:
         origin_path = os.path.join(dir_path_content, file)
         destination_path = os.path.join(dest_dir_path, file)
-        
+
         if os.path.isfile(origin_path):
             destination_path = Path(destination_path).with_suffix(".html")
-            generate_page(origin_path, template_path, destination_path)
+            generate_page(origin_path, template_path, destination_path, base_path)
         else:
-            generate_pages_recursive(origin_path, template_path, destination_path)
+            generate_pages_recursive(origin_path, template_path, destination_path, base_path)

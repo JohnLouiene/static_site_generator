@@ -1,3 +1,4 @@
+```
 # Available Markdown blocks that can be parsed:
 - paragraphs ("pragraph" - > <p>)
 - heading ("# " -> <h1> - <h6>)
@@ -11,9 +12,9 @@
 - bold ("**" -> <b>)
 - italic ("_" -> <i>)
 - code ("`" -> <code>) 
-- link ("[{alt}]({url})") 
+- link ("[{alt_text}]({url})") 
 - images ("![{alt}]({url})")
-
+```
 
 Notes: 
 - Incomplete markdown symbols will raise an error
